@@ -68,7 +68,11 @@ jobs:
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         run: |
-          docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG notebook2rest/build
+          docker build \
+            --build-arg GIT_SHA=${{ github.sha }} \
+            --build-arg BUILD_NUMBER=${{ github.run_number }} \
+            --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') \
+            -t $REGISTRY/$REPOSITORY:$IMAGE_TAG notebook2rest/build
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
 
       # Points it to the AWS cluster
