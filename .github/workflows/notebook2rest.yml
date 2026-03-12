@@ -78,5 +78,6 @@ jobs:
       # Redeploys helm chart
       - name: Deploy Helm chart
         run: |
+          cd notebook2rest
           helm upgrade --install my-api templates/helm --namespace default --set image.repository=259361438396.dkr.ecr.eu-north-1.amazonaws.com/notebook2rest/api --set image.tag=$IMAGE_TAG
          # helm upgrade --install my-api templates/helm --namespace default --set image.repository=$REGISTRY/$REPOSITORY --set image.tag=$IMAGE_TAG
